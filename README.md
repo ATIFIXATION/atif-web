@@ -1,6 +1,8 @@
 # Atif Khan — Personal Portfolio
 
-> **Engineer by Logic. Creator by Instinct.**
+> **Engineer by logic. Creator by instinct.**
+> Live Website: [https://atif-web-mu.vercel.app](https://atif-web-mu.vercel.app)
+> Repository: [https://github.com/ATIFIXATION/atif-web](https://github.com/ATIFIXATION/atif-web)
 > A personal portfolio website for Atif Khan, an AI & Data Science engineering student and filmmaker-writer from Bhopal, India.
 
 ---

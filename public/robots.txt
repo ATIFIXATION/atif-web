@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://atif-portfolio.vercel.app/sitemap.xml
+Sitemap: https://atif-web-mu.vercel.app/sitemap.xml
