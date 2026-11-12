@@ -23,8 +23,10 @@ export const links = {
   },
   linkedin: {
     label: "LinkedIn",
-    url: null,
-    pending: true
+    url: "https://linkedin.com/in/atifixation",
+    handle: "atifixation",
+    pending: false,
+    status: "live"
   },
   framebyframe: {
     label: "FrameByFrame",

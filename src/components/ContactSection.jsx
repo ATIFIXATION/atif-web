@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { identity } from '../data/identity';
 import { links } from '../data/links';
-import { Mail, Github, Instagram, Copy, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
+import { Mail, Github, Instagram, Linkedin, Copy, Check, Send, Sparkles, MessageSquare } from 'lucide-react';
 
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
@@ -124,8 +124,20 @@ export default function ContactSection() {
                 className="inline-flex items-center gap-2 px-4 py-2 bg-[#E5383B] text-[#FFFDF6] rounded-md font-bold text-xs shadow-[3px_3px_0px_#16120F] hover:bg-[#FFB703] hover:text-[#16120F] transition-colors"
               >
                 <Instagram size={14} />
-                <span>Instagram ({links.instagram.handle})</span>
+                <span>Instagram</span>
               </a>
+
+              {links.linkedin.url && (
+                <a
+                  href={links.linkedin.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#0FB5AE] text-[#16120F] border-2 border-[#16120F] rounded-md font-bold text-xs shadow-[3px_3px_0px_#16120F] hover:bg-[#FFB703] transition-colors"
+                >
+                  <Linkedin size={14} />
+                  <span>LinkedIn</span>
+                </a>
+              )}
 
               <a
                 href={links.grayvale.url}

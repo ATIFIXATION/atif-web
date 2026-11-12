@@ -120,8 +120,21 @@ export const projects = [
   {
     id: "arogyasathi",
     title: "ArogyaSathi",
-    category: "Healthcare / Software",
-    pending: true // Hidden until Atif provides description
+    tagline: "Community healthcare coordination connecting citizens, ASHA workers & health officers",
+    category: "Full-Stack · Healthcare",
+    cover: "/assets/cravings-home.webp",
+    story: {
+      context: "Fragmented communication between rural citizens, community ASHA health workers, and supervisory medical officers.",
+      idea: "A structured role-based workflow web application facilitating patient tracking, maternal health updates, and transparent service coordination.",
+      result: "Architected React + Vite frontend, Express REST APIs, and PostgreSQL database with role-based permissions."
+    },
+    stack: ["React", "Vite", "Node.js", "Express.js", "PostgreSQL", "REST APIs"],
+    role: "Full-Stack Developer",
+    status: "Production Architecture",
+    githubUrl: "https://github.com/ATIFIXATION/ArogyaSathi",
+    liveUrl: null,
+    verify: false,
+    pending: false
   },
   {
     id: "playnexus",
