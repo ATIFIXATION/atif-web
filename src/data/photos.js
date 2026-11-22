@@ -65,3 +65,4 @@ export const portfolioPhotos = [
     location: 'FrameByFrame Studio'
   }
 ];
+

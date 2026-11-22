@@ -18,7 +18,13 @@ import {
   Send,
   Mail,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
+  Filter,
+  Image as ImageIcon,
+  Type,
+  X,
+  Hash,
+  Calendar
 } from 'lucide-react';
 import { creativeWorks } from '../data/creative';
 import { portfolioPhotos } from '../data/photos';
@@ -26,6 +32,7 @@ import { identity } from '../data/identity';
 import { links } from '../data/links';
 import PhotoLightbox from './PhotoLightbox';
 import { useTheme } from '../context/ThemeContext';
+import socialManifest from '../data/social/manifest.json';
 
 export default function CreativeTab({ onSwitchToTechnical }) {
   const { theme } = useTheme();
@@ -45,6 +52,24 @@ export default function CreativeTab({ onSwitchToTechnical }) {
   const [libraryLoaded, setLibraryLoaded] = useState(false);
   const [libraryFailed, setLibraryFailed] = useState(false);
   const iframeRef = useRef(null);
+
+  // Social Manifest states
+  const [socialFilter, setSocialFilter] = useState('all');
+  const [poemViewModes, setPoemViewModes] = useState({}); // { [id]: 'text' | 'image' }
+  const [selectedSocialPost, setSelectedSocialPost] = useState(null);
+
+  const poems = socialManifest.filter((p) => p.tag === 'poem');
+  const curatedEssays = socialManifest.filter((p) => p.tag !== 'poem');
+  const filteredEssays = socialFilter === 'all'
+    ? curatedEssays
+    : curatedEssays.filter((p) => p.tag === socialFilter);
+
+  const togglePoemMode = (id) => {
+    setPoemViewModes((prev) => ({
+      ...prev,
+      [id]: prev[id] === 'image' ? 'text' : 'image',
+    }));
+  };
 
   useEffect(() => {
     // Timeout detection: if iframe hasn't loaded in 7 seconds, show clean fallback card
@@ -400,10 +425,10 @@ export default function CreativeTab({ onSwitchToTechnical }) {
       </section>
 
       {/* ========================================================
-          D) @ATIFRECOMMENDS: BOOKS, FILM & PSYCHOLOGY
+          D1) POEMS & VERSE: ZINE ARCHIVE (REAL TEXT + ZINE STYLING)
           ======================================================== */}
       <section
-        id="recommends"
+        id="poems"
         className="py-20 px-4 sm:px-6 lg:px-8 bg-[#000F5C] text-[#E1C296] border-b-4 border-[#EF3969]"
       >
         <div className="max-w-6xl mx-auto">
@@ -411,50 +436,329 @@ export default function CreativeTab({ onSwitchToTechnical }) {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 pb-6 border-b-2 border-[#E1C296]/20">
             <div>
               <div className="inline-flex items-center gap-2 y2k-tape-label text-xs mb-2">
-                <span>★ @ATIFRECOMMENDS</span>
+                <span>★ ORIGINAL WRITING & VERSE</span>
               </div>
               <h2 className="text-3xl sm:text-4xl font-black font-engineer uppercase tracking-tight text-[#E1C296]">
-                Philosophy & Psychology Cards
+                Poems & Philosophical Verse
               </h2>
+              <p className="text-xs font-mono text-[#E6B886] mt-1 max-w-xl">
+                Written and curated by Atif Khan. Rendered as authentic zine text cards with line-level typography, Urdu/Unicode preservation, and instant toggle to view the original Instagram post photo.
+              </p>
             </div>
+
             <a
               href="https://instagram.com/atifrecommends"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#EF3969] text-[#000354] font-mono text-xs font-bold uppercase border-2 border-[#E1C296] shadow-[3px_3px_0px_#000354] hover:bg-[#E1C296] transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#EF3969] text-[#000354] font-mono text-xs font-bold uppercase border-2 border-[#E1C296] shadow-[3px_3px_0px_#000354] hover:bg-[#E1C296] transition-all self-start sm:self-end"
             >
               <Instagram size={14} />
-              <span>Visit @atifrecommends</span>
+              <span>@atifrecommends</span>
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {creativeWorks.atifrecommends.posts.map((post) => (
+          {/* Grid of Zine Poem Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            {poems.map((poem, index) => {
+              const isImageMode = poemViewModes[poem.id] === 'image';
+              const isPinkSlab = index % 2 === 1;
+
+              return (
+                <div
+                  key={poem.id}
+                  className="relative p-1.5 tartan-pattern rounded-lg border-4 border-[#E1C296] shadow-[8px_8px_0px_#EF3969] transition-transform hover:-translate-y-1"
+                >
+                  <div
+                    className={`relative p-6 sm:p-8 rounded border-2 border-[#E1C296] flex flex-col justify-between min-h-[440px] ${
+                      isPinkSlab
+                        ? 'bg-[#EF3969] text-[#000354]'
+                        : 'bg-[#000354] text-[#E1C296]'
+                    }`}
+                  >
+                    {/* Card Top Utility Bar */}
+                    <div className="flex items-center justify-between gap-2 pb-4 mb-4 border-b border-current/20 text-xs font-mono">
+                      <div className="flex items-center gap-2">
+                        <span className="y2k-tape-label text-[11px] font-black uppercase">
+                          ★ POEM · {poem.postType.toUpperCase()}
+                        </span>
+                        <span className="opacity-70 text-[10px] hidden sm:inline">
+                          {poem.date}
+                        </span>
+                      </div>
+
+                      {/* Read as Text / Read as Image Toggle */}
+                      <button
+                        onClick={() => togglePoemMode(poem.id)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-mono font-bold uppercase rounded border transition-all ${
+                          isPinkSlab
+                            ? 'bg-[#000354] text-[#E1C296] border-[#000354] hover:bg-[#000F5C]'
+                            : 'bg-[#EF3969] text-[#000354] border-[#E1C296] hover:bg-[#E1C296]'
+                        }`}
+                        title="Toggle between real text and the original post image"
+                      >
+                        {isImageMode ? (
+                          <>
+                            <Type size={12} />
+                            <span>Read as Text</span>
+                          </>
+                        ) : (
+                          <>
+                            <ImageIcon size={12} />
+                            <span>Read as Image</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Card Body: Text or Image */}
+                    {isImageMode ? (
+                      <div className="my-auto relative aspect-square w-full rounded overflow-hidden border-2 border-current shadow-inner bg-[#000354]">
+                        <img
+                          src={poem.originalImage}
+                          alt={poem.title}
+                          className="w-full h-full object-cover y2k-photo"
+                        />
+                        <div className="absolute bottom-2 right-2 px-2 py-0.5 bg-[#000354]/90 text-[#E1C296] text-[10px] font-mono border border-[#E1C296]">
+                          Original Post Photo
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex-1 flex flex-col justify-between my-2">
+                        <div>
+                          <h3
+                            dir="auto"
+                            className="text-2xl sm:text-3xl font-black font-engineer tracking-tight mb-2"
+                          >
+                            {poem.title}
+                          </h3>
+
+                          {/* Star Divider */}
+                          <div className="flex items-center gap-2 my-4 opacity-50 text-xs">
+                            <span>★</span>
+                            <span className="w-8 h-px bg-current" />
+                            <span>★</span>
+                            <span className="w-8 h-px bg-current" />
+                            <span>★</span>
+                          </div>
+
+                          {/* Stanza Lines Preserved */}
+                          <p
+                            dir="auto"
+                            className={`font-mono text-sm sm:text-base leading-relaxed whitespace-pre-line tracking-wide select-text ${
+                              isPinkSlab ? 'text-[#000354]' : 'text-[#E1C296]/95'
+                            }`}
+                          >
+                            {poem.caption}
+                          </p>
+                        </div>
+
+                        {/* Signature bottom-right */}
+                        <div className="mt-6 pt-4 border-t border-current/15 flex items-center justify-between text-xs font-mono">
+                          <span className="opacity-70 text-[11px] italic">
+                            Atif Khan · @atifrecommends
+                          </span>
+                          <span className="font-bold tracking-wider">
+                            ★ ATIF KHAN
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Card Footer: Hashtags & Link to Post */}
+                    <div className="mt-4 pt-3 border-t border-current/20 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                      <div className="flex flex-wrap gap-1.5 max-w-[70%]">
+                        {poem.hashtags.slice(0, 3).map((tag, tIdx) => (
+                          <span
+                            key={tIdx}
+                            className="text-[10px] opacity-75 font-mono"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <a
+                        href={poem.permalink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center gap-1 font-bold text-xs uppercase hover:underline ${
+                          isPinkSlab ? 'text-[#000354]' : 'text-[#EF3969]'
+                        }`}
+                      >
+                        <span>View on Instagram</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================
+          D2) BOOKS / FILM / PSYCHOLOGY: FILTERABLE GRID
+          ======================================================== */}
+      <section
+        id="recommends"
+        className="py-20 px-4 sm:px-6 lg:px-8 bg-[#000354] text-[#E1C296] border-b-4 border-[#EF3969]"
+      >
+        <div className="max-w-6xl mx-auto">
+          
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b-2 border-[#E1C296]/20">
+            <div>
+              <div className="inline-flex items-center gap-2 y2k-tape-label text-xs mb-2">
+                <span>★ @ATIFRECOMMENDS ESSAY VAULT</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black font-engineer uppercase tracking-tight text-[#E1C296]">
+                Books, Film & Psychology Cards
+              </h2>
+              <p className="text-xs font-mono text-[#E6B886] mt-1 max-w-xl">
+                Curated literary critiques, cinematic breakdowns, and cognitive psychology notes. Click any card to launch the full formatted essay & quote lightbox.
+              </p>
+            </div>
+
+            {/* Filter Tabs / Chips */}
+            <div className="flex flex-wrap items-center gap-2">
+              {[
+                { key: 'all', label: 'All', count: curatedEssays.length },
+                { key: 'book', label: 'Books', count: curatedEssays.filter(p => p.tag === 'book').length },
+                { key: 'film', label: 'Film', count: curatedEssays.filter(p => p.tag === 'film').length },
+                { key: 'psychology', label: 'Psychology', count: curatedEssays.filter(p => p.tag === 'psychology').length },
+              ].map((f) => (
+                <button
+                  key={f.key}
+                  onClick={() => setSocialFilter(f.key)}
+                  className={`px-3 py-1.5 rounded text-xs font-mono font-bold uppercase border-2 transition-all flex items-center gap-1.5 ${
+                    socialFilter === f.key
+                      ? 'bg-[#EF3969] text-[#000354] border-[#E1C296] shadow-[2px_2px_0px_#000354]'
+                      : 'bg-[#000F5C] text-[#E1C296] border-[#E1C296]/40 hover:border-[#EF3969]'
+                  }`}
+                >
+                  <span>{f.label}</span>
+                  <span className="text-[10px] opacity-75">({f.count})</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Filterable Essays Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredEssays.map((post) => (
               <div
                 key={post.id}
-                className="p-5 bg-[#000354] border-2 border-[#E1C296] rounded-md shadow-[4px_4px_0px_#EF3969] flex flex-col justify-between"
+                onClick={() => setSelectedSocialPost(post)}
+                className="group cursor-pointer bg-[#000F5C] border-2 border-[#E1C296] rounded-lg overflow-hidden shadow-[6px_6px_0px_#EF3969] hover:-translate-y-1 hover:shadow-[8px_8px_0px_#EF3969] transition-all flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between text-[11px] font-mono text-[#EF3969] font-bold mb-2">
-                    <span>★ {post.tag}</span>
-                    <span className="text-[#E6B886]">{post.author}</span>
+                  {/* Card Visual Header */}
+                  <div className="relative aspect-video bg-[#000354] overflow-hidden border-b-2 border-[#E1C296]">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 y2k-photo"
+                    />
+                    
+                    {/* Tape Label with Category */}
+                    <div className="absolute top-2.5 left-2.5 y2k-tape-label text-[10px]">
+                      ★ {post.tag.toUpperCase()}
+                    </div>
+
+                    {/* Post Type Pill */}
+                    <div className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-[#000354]/90 text-[#E1C296] text-[10px] font-mono border border-[#E1C296]">
+                      {post.postType.toUpperCase()}
+                    </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000F5C] via-transparent to-transparent opacity-60" />
                   </div>
 
-                  <h3 className="text-base font-black text-[#E1C296] font-engineer mb-3">
-                    {post.work}
-                  </h3>
+                  <div className="p-5">
+                    <div className="text-[11px] font-mono text-[#EF3969] font-bold mb-1 flex items-center justify-between">
+                      <span>★ {post.author}</span>
+                      <span className="text-[#E6B886] opacity-75">{post.date}</span>
+                    </div>
 
-                  <p className="text-xs font-mono text-[#E1C296]/90 italic leading-relaxed">
-                    "{post.quote}"
-                  </p>
+                    <h3 className="text-lg font-black text-[#E1C296] font-engineer group-hover:text-[#EF3969] transition-colors leading-snug">
+                      {post.title}
+                    </h3>
+
+                    <p className="text-xs font-mono text-[#E1C296]/80 mt-2.5 line-clamp-3 leading-relaxed italic">
+                      "{post.excerpt}"
+                    </p>
+                  </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#E1C296]/20 text-[11px] font-mono text-[#E6B886] flex items-center justify-between">
-                  <span>Editorial Card</span>
-                  <Instagram size={12} className="text-[#EF3969]" />
+                <div className="px-5 pb-5 pt-2 border-t border-[#E1C296]/20 flex items-center justify-between text-xs font-mono text-[#E6B886]">
+                  <span className="group-hover:text-[#EF3969] flex items-center gap-1 font-bold">
+                    <span>Read full essay</span>
+                    <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                  </span>
+                  <Instagram size={13} className="text-[#EF3969]" />
                 </div>
               </div>
             ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ========================================================
+          D3) LIVE FROM INSTAGRAM: OFFICIAL EMBED & PROFILE CARD
+          ======================================================== */}
+      <section
+        id="live-instagram"
+        className="py-16 px-4 sm:px-6 lg:px-8 bg-[#000F5C] text-[#E1C296] border-b-4 border-[#EF3969]"
+      >
+        <div className="max-w-4xl mx-auto">
+          
+          <div className="relative p-2 sm:p-4 tartan-pattern rounded-lg border-4 border-[#E1C296] shadow-[8px_8px_0px_#EF3969]">
+            <div className="bg-[#000354] p-6 sm:p-8 rounded border-2 border-[#E1C296] flex flex-col sm:flex-row items-center justify-between gap-6">
+              
+              <div className="space-y-3 text-center sm:text-left">
+                <div className="inline-flex items-center gap-2 y2k-tape-label text-xs">
+                  <span>★ LIVE FEED & REELS</span>
+                </div>
+                
+                <h3 className="text-2xl sm:text-3xl font-black font-engineer text-[#E1C296]">
+                  Live from Instagram · @atifrecommends
+                </h3>
+
+                <p className="text-xs font-mono text-[#E6B886] max-w-lg leading-relaxed">
+                  Daily visual dissections of Kafka, Dostoevsky, screenplay pacing, and psychology experiments. All original text and cinematography created in Bhopal, India.
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2 text-xs font-mono">
+                  <span className="px-2.5 py-1 bg-[#000F5C] border border-[#E1C296]/40 rounded text-[#E1C296]">
+                    ✦ 16 Curated Works
+                  </span>
+                  <span className="px-2.5 py-1 bg-[#000F5C] border border-[#E1C296]/40 rounded text-[#E1C296]">
+                    ✦ Books & Film
+                  </span>
+                  <span className="px-2.5 py-1 bg-[#000F5C] border border-[#E1C296]/40 rounded text-[#E1C296]">
+                    ✦ Original Urdu & Verse
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center gap-3 w-full sm:w-auto">
+                <a
+                  href="https://instagram.com/atifrecommends"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#EF3969] text-[#000354] font-mono font-black text-sm uppercase border-2 border-[#E1C296] shadow-[4px_4px_0px_#000354] hover:bg-[#E1C296] transition-all flex items-center justify-center gap-2"
+                >
+                  <Instagram size={16} />
+                  <span>Follow @atifrecommends</span>
+                </a>
+
+                <span className="text-[10px] font-mono text-[#E6B886]/70">
+                  Open official Instagram app or web
+                </span>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -822,6 +1126,113 @@ export default function CreativeTab({ onSwitchToTechnical }) {
         </div>
       )}
 
+      {/* Social Post Lightbox Modal */}
+      {selectedSocialPost && (
+        <div
+          className="fixed inset-0 z-[99999] bg-[#000354]/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setSelectedSocialPost(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full bg-[#000F5C] border-4 border-[#E1C296] rounded-lg shadow-[12px_12px_0px_#EF3969] overflow-hidden flex flex-col max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Top Bar */}
+            <div className="bg-[#000354] px-6 py-3 border-b-2 border-[#E1C296] flex items-center justify-between text-xs font-mono">
+              <div className="flex items-center gap-2">
+                <span className="y2k-tape-label text-[11px]">
+                  ★ {selectedSocialPost.tag.toUpperCase()} · {selectedSocialPost.postType.toUpperCase()}
+                </span>
+                <span className="text-[#E6B886] opacity-75 hidden sm:inline">
+                  {selectedSocialPost.date}
+                </span>
+              </div>
+
+              <button
+                onClick={() => setSelectedSocialPost(null)}
+                className="w-7 h-7 rounded bg-[#EF3969] text-[#000354] font-bold flex items-center justify-center hover:bg-[#E1C296] transition-colors"
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 sm:p-8 overflow-y-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              
+              {/* Media Column */}
+              <div className="md:col-span-5 space-y-4">
+                <div className="relative aspect-square w-full bg-[#000354] border-2 border-[#E1C296] rounded overflow-hidden shadow-[4px_4px_0px_#EF3969]">
+                  <img
+                    src={selectedSocialPost.image}
+                    alt={selectedSocialPost.title}
+                    className="w-full h-full object-cover y2k-photo"
+                  />
+                </div>
+
+                <div className="p-3 bg-[#000354] border border-[#E1C296]/30 rounded text-xs font-mono space-y-1">
+                  <div className="flex justify-between text-[#E6B886]">
+                    <span className="opacity-70">Author / Subject:</span>
+                    <span className="font-bold text-[#E1C296]">{selectedSocialPost.author}</span>
+                  </div>
+                  <div className="flex justify-between text-[#E6B886]">
+                    <span className="opacity-70">Published:</span>
+                    <span className="text-[#E1C296]">{selectedSocialPost.date}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Text / Caption Column */}
+              <div className="md:col-span-7 flex flex-col justify-between space-y-4 text-left">
+                <div>
+                  <h3 className="text-2xl sm:text-3xl font-black font-engineer text-[#E1C296] leading-tight">
+                    {selectedSocialPost.title}
+                  </h3>
+
+                  <div className="flex items-center gap-2 my-3 opacity-60 text-xs text-[#E1C296]">
+                    <span>★</span>
+                    <span className="w-10 h-px bg-current" />
+                    <span>★</span>
+                  </div>
+
+                  {/* Full formatted caption */}
+                  <div className="max-h-64 sm:max-h-80 overflow-y-auto pr-2 custom-scrollbar text-xs sm:text-sm font-mono leading-relaxed text-[#E1C296]/95 whitespace-pre-line select-text">
+                    {selectedSocialPost.caption}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-[#E1C296]/20 space-y-3">
+                  {/* Hashtags */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedSocialPost.hashtags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 bg-[#000354] text-[#E6B886] border border-[#E1C296]/30 text-[10px] font-mono rounded"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Instagram Button */}
+                  <a
+                    href={selectedSocialPost.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#EF3969] text-[#000354] font-mono font-black text-xs uppercase border-2 border-[#E1C296] shadow-[3px_3px_0px_#000354] hover:bg-[#E1C296] transition-all"
+                  >
+                    <Instagram size={14} />
+                    <span>View Original Post on Instagram →</span>
+                  </a>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
+
