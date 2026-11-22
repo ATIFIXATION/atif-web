@@ -8,7 +8,29 @@ export const creativeWorks = {
     posterFrame: null,
     btsPhoto: "/assets/atif-shooting.webp",
     btsCaption: "Atif immersed in research & literature in the stacks, tracing visual metaphors for screen.",
-    description: "FrameByFrame is Atif's independent filmmaking imprint, chasing the textural look of 35mm cinematic vlogs, grounded pacing, and Netflix-style realism. Driven by Sony ZV-E10 II and iPhone 15 cinematography with DaVinci Resolve color grading."
+    description: "FrameByFrame is Atif's independent filmmaking imprint, chasing the textural look of 35mm cinematic vlogs, grounded pacing, and Netflix-style realism. Driven by Sony ZV-E10 II and iPhone 15 cinematography with DaVinci Resolve color grading.",
+    series: [
+      {
+        id: "dostoevsky-files-01",
+        title: "The Dostoevsky Files",
+        episode: "Episode 01: Crime & Punishment",
+        logline: "An exploration of moral collapse, Raskolnikov's fever dreams, and the psychology of self-punishment in 35mm pacing.",
+        status: "Released",
+        duration: "04:18",
+        poster: "/assets/poster-03.webp",
+        videoUrl: null
+      },
+      {
+        id: "vethara-visual-key",
+        title: "Vethara: Atmosphere Reel",
+        episode: "Visual Atmosphere Reel",
+        logline: "Fog-drenched industrial silhouettes, analog radio static, and gothic twilight tones.",
+        status: "In Post-Production",
+        duration: "02:45",
+        poster: "/assets/poster-02.webp",
+        videoUrl: null
+      }
+    ]
   },
   atifrecommends: {
     brand: "@atifrecommends",
@@ -51,16 +73,42 @@ export const creativeWorks = {
       }
     ]
   },
+  screenplayWorks: [
+    {
+      id: "frequency-of-the-dead",
+      title: "The Frequency of the Dead",
+      format: "Feature Screenplay · Supernatural Mystery",
+      coAuthor: "Muhammad Rehaan",
+      setting: "Vethara — A fictional, fog-drenched industrial metropolis",
+      logline: "When an abandoned shortwave frequency begins broadcasting the voices of the missing across the industrial city of Vethara, two university students trace the transmission into an underground network of psychic resonances, forgotten radio towers, and unresolved guilt.",
+      status: "Screenplay Draft Complete",
+      cover: "/assets/frequency-of-the-dead-cover.webp",
+      tags: ["VETHARA", "SUPERNATURAL", "SCREENPLAY", "PSYCHIC FREQUENCY"],
+      details: "Co-written with Muhammad Rehaan. Explores sound frequencies, post-industrial folklore, and metaphysical grief."
+    },
+    {
+      id: "blood-debt",
+      title: "BLOOD DEBT",
+      format: "Feature Screenplay · Dark Comedy / Blackmail",
+      coAuthor: null,
+      setting: "Bhopal, Madhya Pradesh (Underworld & Student Quarters)",
+      logline: "A desperate engineering dropout and his volatile childhood friend attempt to blackmail a notorious local financier named Khan Saab, only to discover their mark is already being audited by a ruthless cartel.",
+      status: "First Draft Complete",
+      cover: "/assets/poster-01.webp",
+      tags: ["DARK COMEDY", "BLACKMAIL", "CRIME", "BHOPAL NOIR"],
+      details: "High-stakes banter, moral absurdity, and regional Bhopal tension."
+    }
+  ],
   novel: {
     title: "The Frequency of the Dead",
-    genre: "Supernatural · New Adult Fiction",
+    genre: "Supernatural Screenplay",
     coAuthor: "Muhammad Rehaan",
     setting: "Vethara — A fictional, fog-drenched industrial metropolis",
     cover: "/assets/frequency-of-the-dead-cover.webp",
     synopsis: "When an abandoned shortwave frequency begins broadcasting voices of the missing across the industrial city of Vethara, two university students trace the transmission into an underground network of forgotten archives, psychic resonances, and unresolved guilt.",
-    role: "Co-Author: Wrote and formatted the complete manuscript, and spearheaded visual worldbuilding and book cover iterations.",
-    status: "Manuscript Complete",
-    excerptAvailable: false, // [PENDING: Show button once excerpt PDF is uploaded]
+    role: "Co-Screenwriter: Penned and formatted the complete screenplay draft with Muhammad Rehaan, spearheading visual worldbuilding and cinematic treatment.",
+    status: "Screenplay Draft Complete",
+    excerptAvailable: false,
     verify: false
   },
   screenwriting: [

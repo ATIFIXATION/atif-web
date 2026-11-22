@@ -276,7 +276,7 @@ export const CROWD_ELEMENTS = [
     render: ({ isTriggered }) => (
       <div className="cursor-pointer group">
         <svg viewBox="0 0 100 80" className="w-20 sm:w-24 h-auto overflow-visible select-none">
-          <title>The Frequency of the Dead — Click to tune frequency</title>
+          <title>The Frequency of the Dead (Supernatural Screenplay) — Click to tune frequency</title>
           {/* Animated Pulsing Waveform above the radio */}
           <g className={`transition-all duration-300 ${isTriggered ? 'stroke-[#FFB703] scale-125' : 'stroke-[#5B2EE0]'}`}>
             <path

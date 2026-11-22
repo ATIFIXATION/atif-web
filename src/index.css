@@ -67,7 +67,7 @@
   --theme-footer-stroke: #16120F;
   --theme-footer-fill: #FFFDF6;
   
-  --hero-image: url("/assets/atif-cutout.webp");
+  --hero-image: url("/assets/photos/film-still-agent.jpg");
   --display-font: "Bricolage Grotesque", sans-serif;
 }
 
@@ -121,7 +121,7 @@
   --theme-footer-stroke: var(--y2k-cream);
   --theme-footer-fill: var(--y2k-navy);
   
-  --hero-image: url("/assets/atif-cutout.webp");
+  --hero-image: url("/assets/photos/film-still-agent.jpg");
   --display-font: "Bricolage Grotesque", -apple-system, sans-serif;
 }
 
