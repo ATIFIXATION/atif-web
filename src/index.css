@@ -8,6 +8,16 @@
   --color-ink: #16120F;
   --color-chalk: #FFFDF6;
 
+  /* Theme 2: Y2K Tartan Zine Tokens */
+  --color-y2k-pink: #EF3969;
+  --color-y2k-navy: #000354;
+  --color-y2k-navy-2: #000F5C;
+  --color-y2k-peach: #E6B886;
+  --color-y2k-cream: #E1C296;
+  --color-y2k-forest: #206749;
+  --color-y2k-forest-dark: #071C15;
+  --color-y2k-red: #A32D39;
+
   --font-engineer: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-creator: "Fraunces", Georgia, serif;
   --font-body: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -15,26 +25,215 @@
   --font-screenplay: "Courier Prime", Courier, monospace;
 }
 
-:root {
+/* ========================================================
+   THEME 1: CLASSIC (DEFAULT)
+   ======================================================== */
+:root,
+[data-theme="classic"] {
+  --theme-bg: #FFFDF6;
+  --theme-surface: #FFFDF6;
+  --theme-text: #16120F;
+  --theme-text-muted: rgba(22, 18, 15, 0.7);
+  --theme-border: #16120F;
+  --theme-card-bg: #FFFDF6;
+  --theme-card-border: #16120F;
+  --theme-shadow: #16120F;
+  
+  --theme-primary: #0FB5AE;
+  --theme-secondary: #5B2EE0;
+  --theme-highlight: #FFB703;
+  --theme-accent: #E5383B;
+  
+  --theme-nav-bg: rgba(255, 253, 246, 0.95);
+  --theme-nav-text: #16120F;
+  --theme-nav-border: #16120F;
+  
+  --theme-selection-bg: #FFB703;
+  --theme-selection-text: #16120F;
+  
+  --theme-hero-bg: #FFFDF6;
+  --theme-hero-slab: transparent;
+  
+  --theme-lab-bg: #0FB5AE;
+  --theme-lab-text: #16120F;
+  --theme-studio-bg: #5B2EE0;
+  --theme-studio-text: #FFFDF6;
+  --theme-contact-bg: #0FB5AE;
+  --theme-contact-text: #16120F;
+  
+  --theme-footer-bg: #16120F;
+  --theme-footer-stage: #FFFDF6;
+  --theme-footer-text: #FFFDF6;
+  --theme-footer-stroke: #16120F;
+  --theme-footer-fill: #FFFDF6;
+  
+  --hero-image: url("/assets/atif-cutout.webp");
   --display-font: "Bricolage Grotesque", sans-serif;
-  --display-variation: normal;
 }
 
-.theme-engineer {
-  --display-font: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, sans-serif;
+/* ========================================================
+   THEME 2: Y2K TARTAN ZINE
+   ======================================================== */
+[data-theme="y2k"] {
+  --y2k-pink: #EF3969;
+  --y2k-navy: #000354;
+  --y2k-navy-2: #000F5C;
+  --y2k-peach: #E6B886;
+  --y2k-cream: #E1C296;
+  --y2k-forest: #206749;
+  --y2k-forest-dark: #071C15;
+  --y2k-red: #A32D39;
+
+  --theme-bg: var(--y2k-navy);
+  --theme-surface: var(--y2k-navy-2);
+  --theme-text: var(--y2k-cream);
+  --theme-text-muted: var(--y2k-peach);
+  --theme-border: var(--y2k-cream);
+  --theme-card-bg: var(--y2k-navy-2);
+  --theme-card-border: var(--y2k-cream);
+  --theme-shadow: var(--y2k-pink);
+  
+  --theme-primary: var(--y2k-pink);
+  --theme-secondary: var(--y2k-navy);
+  --theme-highlight: var(--y2k-peach);
+  --theme-accent: var(--y2k-red);
+  
+  --theme-nav-bg: var(--y2k-navy);
+  --theme-nav-text: var(--y2k-cream);
+  --theme-nav-border: var(--y2k-pink);
+  
+  --theme-selection-bg: var(--y2k-pink);
+  --theme-selection-text: var(--y2k-navy);
+  
+  --theme-hero-bg: var(--y2k-navy);
+  --theme-hero-slab: var(--y2k-pink);
+  
+  --theme-lab-bg: var(--y2k-navy-2);
+  --theme-lab-text: var(--y2k-cream);
+  --theme-studio-bg: var(--y2k-navy);
+  --theme-studio-text: var(--y2k-cream);
+  --theme-contact-bg: var(--y2k-navy-2);
+  --theme-contact-text: var(--y2k-cream);
+  
+  --theme-footer-bg: var(--y2k-navy);
+  --theme-footer-stage: var(--y2k-navy-2);
+  --theme-footer-text: var(--y2k-cream);
+  --theme-footer-stroke: var(--y2k-cream);
+  --theme-footer-fill: var(--y2k-navy);
+  
+  --hero-image: url("/assets/atif-cutout.webp");
+  --display-font: "Bricolage Grotesque", -apple-system, sans-serif;
 }
 
-.theme-creator {
-  --display-font: "Fraunces", Georgia, serif;
+/* Authentic Pure CSS Tartan Plaid Pattern */
+.tartan-pattern {
+  background-color: #071C15;
+  background-image:
+    /* Diagonal twill hatch weave simulation */
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.3) 0 2px, transparent 2px 4px),
+    /* Vertical red and cream tartan stripes */
+    repeating-linear-gradient(90deg,
+      transparent 0 24px,
+      #A32D39 24px 30px,
+      transparent 30px 36px,
+      #E1C296 36px 38px,
+      transparent 38px 64px,
+      #206749 64px 88px,
+      transparent 88px 94px,
+      #E1C296 94px 96px,
+      transparent 96px 120px
+    ),
+    /* Horizontal red and cream tartan stripes */
+    repeating-linear-gradient(0deg,
+      transparent 0 24px,
+      #A32D39 24px 30px,
+      transparent 30px 36px,
+      #E1C296 36px 38px,
+      transparent 38px 64px,
+      #206749 64px 88px,
+      transparent 88px 94px,
+      #E1C296 94px 96px,
+      transparent 96px 120px
+    ),
+    /* Forest green and dark check ground */
+    repeating-linear-gradient(90deg, #206749 0 60px, #071C15 60px 120px),
+    repeating-linear-gradient(0deg, #206749 0 60px, #071C15 60px 120px);
+  background-blend-mode: normal, overlay, overlay, multiply, normal;
+  background-size: 120px 120px;
 }
 
+/* 5-Point Star Clip-Path Geometry */
+.star-clip-window {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* Cross-processed Y2K Duotone Photo Filter */
+.y2k-photo {
+  filter: url(#y2k-duotone) contrast(1.15) saturate(1.2);
+  transition: filter 0.3s ease;
+}
+
+[data-theme="y2k"] img:not(.no-y2k-filter) {
+  filter: contrast(1.15) saturate(1.2) hue-rotate(-8deg);
+}
+
+/* Y2K Embossed Tape Label Chip */
+.y2k-tape-label {
+  background: #000354;
+  color: #E1C296;
+  border: 1.5px solid #E1C296;
+  box-shadow: 2px 2px 0px #EF3969;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Y2K Star Stickers */
+.y2k-star-sticker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #EF3969;
+  filter: drop-shadow(2px 2px 0px #000354);
+}
+
+/* Selection per theme */
+::selection {
+  background-color: var(--theme-selection-bg);
+  color: var(--theme-selection-text);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--theme-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--theme-shadow);
+  border: 2px solid var(--theme-bg);
+}
+
+/* Global Body setup reading strictly from tokens */
 body {
   font-family: var(--font-body);
-  background-color: #FFFDF6;
-  color: #16120F;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
   overflow-x: hidden;
   font-size: 1.0625rem;
   line-height: 1.65;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root {
+  --display-font: "Bricolage Grotesque", sans-serif;
+  --display-variation: normal;
 }
 
 /* Fluid type scale using clamp() with modular ratio ~1.333 */
@@ -134,6 +333,97 @@ body {
   100% {
     stroke-dashoffset: 0;
   }
+}
+
+/* Y2K Stage Crowd Line-Art Inversion */
+[data-theme="y2k"] #stage-area svg g[stroke="#16120F"],
+[data-theme="y2k"] #stage-area svg path[stroke="#16120F"],
+[data-theme="y2k"] #stage-area svg line[stroke="#16120F"],
+[data-theme="y2k"] #stage-area svg rect[stroke="#16120F"],
+[data-theme="y2k"] #stage-area svg circle[stroke="#16120F"] {
+  stroke: #E1C296;
+}
+
+[data-theme="y2k"] #stage-area svg g[fill="#FFFDF6"],
+[data-theme="y2k"] #stage-area svg rect[fill="#FFFDF6"],
+[data-theme="y2k"] #stage-area svg circle[fill="#FFFDF6"],
+[data-theme="y2k"] #stage-area svg path[fill="#FFFDF6"] {
+  fill: #000354;
+}
+
+[data-theme="y2k"] #stage-area svg text[fill="#16120F"] {
+  fill: #E1C296;
+}
+
+/* Y2K Section & Card Theming (Non-destructive, theme-scoped) */
+[data-theme="y2k"] #lab {
+  background-color: var(--y2k-navy-2) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #studio {
+  background-color: var(--y2k-navy) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #stickers {
+  background-color: var(--y2k-navy) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #timeline {
+  background-color: var(--y2k-navy-2) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #achievements {
+  background-color: var(--y2k-navy) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #contact {
+  background-color: var(--y2k-navy-2) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-pink) !important;
+}
+
+/* Cards & containers in Y2K */
+[data-theme="y2k"] #lab .bg-\[\#FFFDF6\],
+[data-theme="y2k"] #studio .bg-\[\#FFFDF6\],
+[data-theme="y2k"] #contact .bg-\[\#FFFDF6\],
+[data-theme="y2k"] #timeline .bg-\[\#FFFDF6\],
+[data-theme="y2k"] #achievements .bg-\[\#FFFDF6\] {
+  background-color: var(--y2k-navy) !important;
+  color: var(--y2k-cream) !important;
+  border-color: var(--y2k-cream) !important;
+  box-shadow: 6px 6px 0px var(--y2k-pink) !important;
+}
+
+[data-theme="y2k"] #lab .text-\[\#16120F\],
+[data-theme="y2k"] #studio .text-\[\#16120F\],
+[data-theme="y2k"] #contact .text-\[\#16120F\],
+[data-theme="y2k"] #timeline .text-\[\#16120F\],
+[data-theme="y2k"] #achievements .text-\[\#16120F\] {
+  color: var(--y2k-cream) !important;
+}
+
+[data-theme="y2k"] #lab .border-\[\#16120F\],
+[data-theme="y2k"] #studio .border-\[\#16120F\],
+[data-theme="y2k"] #contact .border-\[\#16120F\],
+[data-theme="y2k"] #timeline .border-\[\#16120F\],
+[data-theme="y2k"] #achievements .border-\[\#16120F\] {
+  border-color: var(--y2k-cream) !important;
+}
+
+[data-theme="y2k"] #contact button[type="submit"] {
+  background-color: var(--y2k-pink) !important;
+  color: var(--y2k-navy) !important;
+  border-color: var(--y2k-cream) !important;
+  box-shadow: 4px 4px 0px var(--y2k-cream) !important;
 }
 
 .animate-marker {

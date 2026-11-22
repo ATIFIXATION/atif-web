@@ -20,6 +20,24 @@
     <meta name="twitter:title" content="Atif Khan — Engineer by logic. Creator by instinct." />
     <meta name="twitter:description" content="AI & Data Science undergraduate, full-stack MERN developer, filmmaker behind FrameByFrame, and co-author of The Frequency of the Dead." />
     <meta name="twitter:image" content="https://atif-web-mu.vercel.app/assets/og-image.webp" />
+    <meta name="theme-color" id="meta-theme-color" content="#FFFDF6" />
+
+    <!-- Zero-Flash Theme Script (Executes before paint) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('atif-portfolio-theme');
+          var theme = saved === 'y2k' ? 'y2k' : 'classic';
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.getElementById('meta-theme-color');
+          if (meta) {
+            meta.setAttribute('content', theme === 'y2k' ? '#000354' : '#FFFDF6');
+          }
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'classic');
+        }
+      })();
+    </script>
 
     <!-- Google Fonts Preconnect, Preload & Display Swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,6 +53,22 @@
     />
   </head>
   <body class="bg-[#FFFDF6] text-[#16120F] antialiased selection:bg-[#FFB703] selection:text-[#16120F]">
+    <!-- Hidden SVG Duotone Filter for Y2K Theme Photos -->
+    <svg width="0" height="0" class="sr-only" aria-hidden="true" style="position: absolute; width: 0; height: 0;">
+      <filter id="y2k-duotone">
+        <feColorMatrix type="matrix" values="
+          0.33 0.33 0.33 0 0
+          0.33 0.33 0.33 0 0
+          0.33 0.33 0.33 0 0
+          0 0 0 1 0" />
+        <feComponentTransfer color-interpolation-filters="sRGB">
+          <feFuncR type="table" tableValues="0.0 0.90" />
+          <feFuncG type="table" tableValues="0.01 0.72" />
+          <feFuncB type="table" tableValues="0.33 0.52" />
+        </feComponentTransfer>
+      </filter>
+    </svg>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

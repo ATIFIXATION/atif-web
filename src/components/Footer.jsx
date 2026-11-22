@@ -3,12 +3,15 @@ import { motion, useInView } from 'framer-motion';
 import { links } from '../data/links';
 import { identity } from '../data/identity';
 import { CROWD_ELEMENTS } from '../data/footerCrowd';
-import { ArrowUp, Instagram, Github, Linkedin, Mail, Sparkles, Volume2, Clapperboard, Heart, Terminal } from 'lucide-react';
+import { ArrowUp, Instagram, Github, Linkedin, Mail, Sparkles, Volume2, Clapperboard, Heart, Terminal, Star } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Footer({ voice, setVoice }) {
   const containerRef = useRef(null);
   const stageRef = useRef(null);
   const isInView = useInView(containerRef, { amount: 0.15, once: false });
+  const { theme } = useTheme();
+  const isY2K = theme === 'y2k';
 
   // Mouse tracking state for cursor reactions and parallax
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, normalizedX: 0, normalizedY: 0 });
@@ -103,12 +106,16 @@ export default function Footer({ voice, setVoice }) {
   return (
     <footer
       ref={containerRef}
-      className="relative w-full bg-[#16120F] text-[#FFFDF6] overflow-hidden"
+      className={`relative w-full overflow-hidden transition-colors duration-300 ${
+        isY2K ? 'bg-[#000354] text-[#E1C296]' : 'bg-[#16120F] text-[#FFFDF6]'
+      }`}
       aria-label="Portfolio Stage Footer"
     >
       {/* 1. TOP HEADER & NAVIGATION BAR */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-12 border-b border-[#FFFDF6]/15">
+        <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-12 border-b ${
+          isY2K ? 'border-[#EF3969]/30' : 'border-[#FFFDF6]/15'
+        }`}>
           
           {/* Main Stage Headline & Subtitle */}
           <motion.div
@@ -117,20 +124,24 @@ export default function Footer({ voice, setVoice }) {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-4 max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFFDF6]/10 text-xs font-mono text-[#FFB703] border border-[#FFFDF6]/20">
-              <span className="w-2 h-2 rounded-full bg-[#FFB703] animate-pulse" />
-              <span>THE STAGE & CURTAIN CALL</span>
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border ${
+              isY2K
+                ? 'bg-[#EF3969]/20 text-[#EF3969] border-[#EF3969]/40'
+                : 'bg-[#FFFDF6]/10 text-[#FFB703] border-[#FFFDF6]/20'
+            }`}>
+              <span className={`w-2 h-2 rounded-full animate-pulse ${isY2K ? 'bg-[#EF3969]' : 'bg-[#FFB703]'}`} />
+              <span>{isY2K ? "★ THE Y2K CURTAIN CALL ★" : "THE STAGE & CURTAIN CALL"}</span>
             </div>
 
-            <h2 className="text-fluid-h2 font-black tracking-tight text-[#FFFDF6] leading-none">
-              See you around.
+            <h2 className="text-fluid-h2 font-black tracking-tight leading-none font-engineer">
+              {isY2K ? "SEE YOU AROUND." : "See you around."}
             </h2>
 
-            <p className="text-base sm:text-lg text-[#FFFDF6]/80 font-body font-normal">
-              Writer. Filmmaker. Developer. <span className="text-[#FFB703] font-semibold">Bhopal → Vethara.</span>
+            <p className={`text-base sm:text-lg font-body font-normal ${isY2K ? 'text-[#E1C296]/90' : 'text-[#FFFDF6]/80'}`}>
+              Writer. Filmmaker. Developer. <span className={isY2K ? "text-[#EF3969] font-bold" : "text-[#FFB703] font-semibold"}>Bhopal → Vethara.</span>
             </p>
 
-            <p className="text-xs font-mono text-[#0FB5AE]">
+            <p className={`text-xs font-mono ${isY2K ? 'text-[#E6B886]' : 'text-[#0FB5AE]'}`}>
               B.Tech AI & Data Science @ LNCT · Part-time Researcher @ Techtonic
             </p>
           </motion.div>
@@ -144,19 +155,19 @@ export default function Footer({ voice, setVoice }) {
           >
             {/* Quick Navigation Links */}
             <nav className="flex flex-wrap items-center gap-5 text-sm font-mono" aria-label="Footer Navigation">
-              <a href="#about" className="hover:text-[#FFB703] transition-colors">
+              <a href="#about" className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#FFB703] transition-colors"}>
                 About
               </a>
-              <a href="#lab" className="hover:text-[#0FB5AE] transition-colors">
+              <a href="#lab" className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#0FB5AE] transition-colors"}>
                 The Lab
               </a>
-              <a href="#studio" className="hover:text-[#5B2EE0] transition-colors">
+              <a href="#studio" className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#5B2EE0] transition-colors"}>
                 The Studio
               </a>
-              <a href="#experience" className="hover:text-[#FFFDF6] transition-colors">
+              <a href="#experience" className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#FFFDF6] transition-colors"}>
                 Trajectory
               </a>
-              <a href="#contact" className="hover:text-[#E5383B] transition-colors">
+              <a href="#contact" className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#E5383B] transition-colors"}>
                 Contact
               </a>
             </nav>
@@ -169,7 +180,11 @@ export default function Footer({ voice, setVoice }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram @atifrecommends"
-                className="w-10 h-10 rounded-lg bg-[#FFFDF6]/10 border border-[#FFFDF6]/20 flex items-center justify-center text-[#FFFDF6] hover:bg-[#E5383B] hover:text-[#FFFDF6] hover:border-[#E5383B] transition-all hover:scale-105"
+                className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all hover:scale-105 ${
+                  isY2K
+                    ? 'bg-[#000F5C] border-[#EF3969] text-[#E1C296] hover:bg-[#EF3969] hover:text-[#000354]'
+                    : 'bg-[#FFFDF6]/10 border-[#FFFDF6]/20 text-[#FFFDF6] hover:bg-[#E5383B] hover:text-[#FFFDF6]'
+                }`}
               >
                 <Instagram size={18} />
               </a>
@@ -180,7 +195,11 @@ export default function Footer({ voice, setVoice }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub @ATIFIXATION"
-                className="w-10 h-10 rounded-lg bg-[#FFFDF6]/10 border border-[#FFFDF6]/20 flex items-center justify-center text-[#FFFDF6] hover:bg-[#FFFDF6] hover:text-[#16120F] hover:border-[#FFFDF6] transition-all hover:scale-105"
+                className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all hover:scale-105 ${
+                  isY2K
+                    ? 'bg-[#000F5C] border-[#EF3969] text-[#E1C296] hover:bg-[#E1C296] hover:text-[#000354]'
+                    : 'bg-[#FFFDF6]/10 border-[#FFFDF6]/20 text-[#FFFDF6] hover:bg-[#FFFDF6] hover:text-[#16120F]'
+                }`}
               >
                 <Github size={18} />
               </a>
@@ -191,7 +210,11 @@ export default function Footer({ voice, setVoice }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Atif Khan"
-                className="w-10 h-10 rounded-lg bg-[#FFFDF6]/10 border border-[#FFFDF6]/20 flex items-center justify-center text-[#FFFDF6] hover:bg-[#0FB5AE] hover:text-[#16120F] hover:border-[#0FB5AE] transition-all hover:scale-105"
+                className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all hover:scale-105 ${
+                  isY2K
+                    ? 'bg-[#000F5C] border-[#EF3969] text-[#E1C296] hover:bg-[#EF3969] hover:text-[#000354]'
+                    : 'bg-[#FFFDF6]/10 border-[#FFFDF6]/20 text-[#FFFDF6] hover:bg-[#0FB5AE] hover:text-[#16120F]'
+                }`}
               >
                 <Linkedin size={18} />
               </a>
@@ -200,7 +223,11 @@ export default function Footer({ voice, setVoice }) {
               <a
                 href={`mailto:${identity.publicEmail}`}
                 aria-label="Email Atif Khan"
-                className="w-10 h-10 rounded-lg bg-[#FFFDF6]/10 border border-[#FFFDF6]/20 flex items-center justify-center text-[#FFFDF6] hover:bg-[#FFB703] hover:text-[#16120F] hover:border-[#FFB703] transition-all hover:scale-105"
+                className={`w-10 h-10 rounded-lg border flex items-center justify-center transition-all hover:scale-105 ${
+                  isY2K
+                    ? 'bg-[#000F5C] border-[#EF3969] text-[#E1C296] hover:bg-[#E1C296] hover:text-[#000354]'
+                    : 'bg-[#FFFDF6]/10 border-[#FFFDF6]/20 text-[#FFFDF6] hover:bg-[#FFB703] hover:text-[#16120F]'
+                }`}
               >
                 <Mail size={18} />
               </a>
@@ -208,11 +235,15 @@ export default function Footer({ voice, setVoice }) {
               {/* Voice Switcher */}
               <button
                 onClick={() => setVoice(voice === 'engineer' ? 'creator' : 'engineer')}
-                className="px-3 py-2 rounded-lg border border-[#FFFDF6]/30 text-xs font-mono text-[#FFFDF6] hover:bg-[#FFFDF6] hover:text-[#16120F] transition-all flex items-center gap-1.5"
+                className={`px-3 py-2 rounded-lg border text-xs font-mono transition-all flex items-center gap-1.5 ${
+                  isY2K
+                    ? 'border-[#EF3969] bg-[#000F5C] text-[#E1C296] hover:bg-[#EF3969] hover:text-[#000354]'
+                    : 'border-[#FFFDF6]/30 text-[#FFFDF6] hover:bg-[#FFFDF6] hover:text-[#16120F]'
+                }`}
                 title="Toggle Portfolio Voice"
               >
                 <span>Voice:</span>
-                <span className="font-bold text-[#FFB703]">
+                <span className={`font-bold ${isY2K ? 'text-[#EF3969]' : 'text-[#FFB703]'}`}>
                   {voice === 'engineer' ? 'Engineer ⇄' : 'Creator ⇄'}
                 </span>
               </button>
@@ -220,7 +251,11 @@ export default function Footer({ voice, setVoice }) {
               {/* Back to Top */}
               <button
                 onClick={scrollToTop}
-                className="flex items-center gap-1.5 px-3.5 py-2 bg-[#FFB703] text-[#16120F] rounded-lg font-bold text-xs shadow-[2px_2px_0px_#FFFDF6] hover:bg-[#0FB5AE] transition-all hover:translate-x-[-1px] hover:translate-y-[-1px]"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-bold text-xs transition-all hover:translate-x-[-1px] hover:translate-y-[-1px] ${
+                  isY2K
+                    ? 'bg-[#EF3969] text-[#000354] border border-[#E1C296] shadow-[2px_2px_0px_#E1C296] hover:bg-[#E1C296]'
+                    : 'bg-[#FFB703] text-[#16120F] shadow-[2px_2px_0px_#FFFDF6] hover:bg-[#0FB5AE]'
+                }`}
                 aria-label="Scroll back to top"
               >
                 <span>Top</span>
@@ -232,38 +267,59 @@ export default function Footer({ voice, setVoice }) {
         </div>
       </div>
 
-      {/* 2. THE STAGE: FULL-WIDTH INKED BAND */}
+      {/* 2. THE STAGE: FULL-WIDTH INKED BAND (RESKINNED FOR Y2K) */}
       <section
         ref={stageRef}
+        id="stage-area"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHoveringStage(true)}
         onMouseLeave={() => {
           setIsHoveringStage(false);
           setMousePos({ x: 0, y: 0, normalizedX: 0, normalizedY: 0 });
         }}
-        className="relative w-full bg-[#FFFDF6] border-t-4 border-b-4 border-[#16120F] overflow-hidden select-none cursor-default"
+        className={`relative w-full border-t-4 border-b-4 overflow-hidden select-none cursor-default transition-colors duration-300 ${
+          isY2K
+            ? 'bg-[#000F5C] border-[#EF3969]'
+            : 'bg-[#FFFDF6] border-[#16120F]'
+        }`}
         style={{ height: 'clamp(380px, 46vw, 540px)' }}
         aria-label="Interactive character stage"
       >
+        {/* Y2K Tartan Trim Edge */}
+        {isY2K && (
+          <div className="absolute top-0 left-0 right-0 h-1.5 tartan-pattern z-30 pointer-events-none" />
+        )}
+
         {/* Subtle Film Grain Texture Overlay */}
         <div className="absolute inset-0 film-grain pointer-events-none z-10" />
 
-        {/* GIANT DRIFTING GHOST WORDMARK ("ATIF KHAN.") */}
+        {/* GIANT DRIFTING GHOST WORDMARK */}
         <div
           className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
           aria-hidden="true"
         >
-          <div className="w-[140%] text-center whitespace-nowrap animate-stage-drift font-black tracking-tighter text-[#16120F]/[0.045] leading-none text-[15vw] lg:text-[18vw]">
-            ATIF KHAN · FRAMEBYFRAME · VETHARA · 
+          <div
+            className={`w-[140%] text-center whitespace-nowrap animate-stage-drift font-black tracking-tighter leading-none text-[15vw] lg:text-[18vw] font-engineer ${
+              isY2K ? 'text-[#E1C296]/[0.05]' : 'text-[#16120F]/[0.045]'
+            }`}
+          >
+            {isY2K
+              ? 'ATIF KHAN · Y2K TARTAN ZINE · VETHARA · '
+              : 'ATIF KHAN · FRAMEBYFRAME · VETHARA · '}
           </div>
         </div>
 
         {/* AMBIENT FLOATING DUST MOTES */}
         <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden" aria-hidden="true">
-          <span className="absolute top-[20%] left-[15%] w-1.5 h-1.5 rounded-full bg-[#16120F]/15 animate-float-slow" />
-          <span className="absolute top-[35%] right-[22%] w-2 h-2 rounded-full bg-[#FFB703]/25 animate-float-slow" style={{ animationDelay: '-2s' }} />
-          <span className="absolute top-[60%] left-[45%] w-1 h-1 rounded-full bg-[#0FB5AE]/30 animate-float-slow" style={{ animationDelay: '-4s' }} />
-          <span className="absolute top-[25%] left-[80%] w-1.5 h-1.5 rounded-full bg-[#5B2EE0]/20 animate-float-slow" style={{ animationDelay: '-1.5s' }} />
+          <span className={`absolute top-[20%] left-[15%] w-1.5 h-1.5 rounded-full animate-float-slow ${
+            isY2K ? 'bg-[#EF3969]/30' : 'bg-[#16120F]/15'
+          }`} />
+          <span className={`absolute top-[35%] right-[22%] w-2 h-2 rounded-full animate-float-slow ${
+            isY2K ? 'bg-[#E1C296]/30' : 'bg-[#FFB703]/25'
+          }`} style={{ animationDelay: '-2s' }} />
+          <span className={`absolute top-[60%] left-[45%] w-1 h-1 rounded-full animate-float-slow ${
+            isY2K ? 'bg-[#EF3969]/30' : 'bg-[#0FB5AE]/30'
+          }`} style={{ animationDelay: '-4s' }} />
         </div>
 
         {/* POPPING PARTICLES CONTAINER */}
@@ -277,20 +333,27 @@ export default function Footer({ voice, setVoice }) {
               className="absolute font-black text-sm flex items-center justify-center"
               style={{ left: `${p.x}px`, top: `${p.y}px`, color: p.color }}
             >
-              {p.type === 'burst' ? '❤️' : p.type === 'clap' ? '🎬' : '⚡'}
+              {p.type === 'burst' ? '★' : p.type === 'clap' ? '🎬' : '⚡'}
             </motion.div>
           ))}
         </div>
 
         {/* STAGE FLOOR CONTACT LINE */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-10 border-t-2 border-[#16120F] bg-[#16120F]/[0.02] z-20 pointer-events-none"
+          className={`absolute bottom-0 left-0 right-0 h-10 border-t-2 z-20 pointer-events-none ${
+            isY2K
+              ? 'border-[#EF3969] bg-[#000354]/40'
+              : 'border-[#16120F] bg-[#16120F]/[0.02]'
+          }`}
           aria-hidden="true"
         >
           {/* Inked Stage Floorboards lines */}
           <div className="w-full h-full flex justify-between px-8 opacity-25">
             {Array.from({ length: 16 }).map((_, i) => (
-              <div key={i} className="w-[1px] h-full bg-[#16120F]" />
+              <div
+                key={i}
+                className={`w-[1px] h-full ${isY2K ? 'bg-[#EF3969]' : 'bg-[#16120F]'}`}
+              />
             ))}
           </div>
         </div>
@@ -355,8 +418,8 @@ export default function Footer({ voice, setVoice }) {
         </div>
 
         {/* Interactive Hint Badge (Bottom Left) */}
-        <div className="absolute bottom-2 left-4 z-30 pointer-events-none hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-[#16120F]/60">
-          <Sparkles size={12} className="text-[#FFB703]" />
+        <div className="absolute bottom-2 left-4 z-30 pointer-events-none hidden sm:flex items-center gap-1.5 text-[11px] font-mono opacity-70">
+          <Sparkles size={12} className={isY2K ? "text-[#EF3969]" : "text-[#FFB703]"} />
           <span>Interactive Stage: Tap props & move cursor</span>
         </div>
 
@@ -364,15 +427,19 @@ export default function Footer({ voice, setVoice }) {
 
       {/* 3. COLOPHON & COPYRIGHT BAR */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#FFFDF6]/60">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono opacity-80">
           
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#0FB5AE]" />
+            <span className={`w-2 h-2 rounded-full ${isY2K ? 'bg-[#EF3969]' : 'bg-[#0FB5AE]'}`} />
             <span>© {new Date().getFullYear()} Atif Khan. All rights reserved.</span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="px-2 py-0.5 rounded bg-[#FFFDF6]/10 text-[11px] text-[#FFB703] border border-[#FFFDF6]/15">
+            <span className={`px-2 py-0.5 rounded text-[11px] border ${
+              isY2K
+                ? 'bg-[#000F5C] text-[#EF3969] border-[#EF3969]'
+                : 'bg-[#FFFDF6]/10 text-[#FFB703] border-[#FFFDF6]/15'
+            }`}>
               23.2599° N, 77.4126° E · Bhopal, India
             </span>
           </div>
@@ -382,7 +449,7 @@ export default function Footer({ voice, setVoice }) {
               href={links.previousPortfolio.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#FFB703] transition-colors underline"
+              className={isY2K ? "hover:text-[#EF3969] transition-colors underline" : "hover:text-[#FFB703] transition-colors underline"}
             >
               Earlier version
             </a>
@@ -390,7 +457,7 @@ export default function Footer({ voice, setVoice }) {
               href={links.grayvale.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#0FB5AE] transition-colors"
+              className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#0FB5AE] transition-colors"}
             >
               Grayvale Systems
             </a>
@@ -398,7 +465,7 @@ export default function Footer({ voice, setVoice }) {
               href={links.github.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#FFFDF6] transition-colors"
+              className={isY2K ? "hover:text-[#EF3969] transition-colors" : "hover:text-[#FFFDF6] transition-colors"}
             >
               GitHub Source
             </a>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, Play, Sparkles, Terminal, Film, Code, Compass } from 'lucide-react';
+import { ArrowDown, Play, Sparkles, Terminal, Film, Code, Compass, Star } from 'lucide-react';
 import { heroStickers } from '../data/stickers';
 import { identity } from '../data/identity';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Hero({ voice, setVoice }) {
+  const { theme } = useTheme();
+  const isY2K = theme === 'y2k';
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const containerRef = useRef(null);
 
@@ -18,11 +21,144 @@ export default function Hero({ voice, setVoice }) {
   };
 
   // Font variation settings dynamic calculation
-  // Bricolage Grotesque: wght 300..900, wdth 75..100, opsz 12..96
-  // Fraunces: wght 300..900, opsz 9..144, SOFT 0..100, WONK 0..1
   const engineerVariation = `"wght" ${Math.round(400 + mousePos.x * 500)}, "wdth" ${Math.round(75 + mousePos.y * 25)}, "opsz" ${Math.round(36 + mousePos.x * 60)}`;
   const creatorVariation = `"wght" ${Math.round(400 + mousePos.x * 450)}, "SOFT" ${Math.round(mousePos.y * 100)}, "WONK" ${mousePos.x > 0.5 ? 1 : 0}, "opsz" 72`;
 
+  // ========================================================
+  // THEME 2: Y2K TARTAN ZINE HERO (COLOR-BLOCK SPLIT + STAR WINDOW)
+  // ========================================================
+  if (isY2K) {
+    return (
+      <section
+        ref={containerRef}
+        id="hero-y2k"
+        className="relative min-h-screen pt-20 flex flex-col justify-between overflow-hidden bg-[#000354] text-[#E1C296] select-none"
+      >
+        {/* Subtle Film Grain Overlay */}
+        <div className="absolute inset-0 film-grain pointer-events-none z-10" />
+
+        {/* 50/50 COLOR-BLOCK SPLIT */}
+        <div className="relative w-full flex-1 flex flex-col">
+          
+          {/* TOP 50% BLOCK: FLAT HOT PINK SLAB */}
+          <div className="relative w-full bg-[#EF3969] border-b-4 border-[#E1C296] py-12 sm:py-16 px-4 flex flex-col items-center justify-center">
+            
+            {/* Top Tape Label */}
+            <div className="mb-4 inline-flex items-center gap-2 y2k-tape-label text-xs sm:text-sm -rotate-1">
+              <span className="text-[#EF3969]">★</span>
+              <span>ISSUE NO. 02 · Y2K TARTAN EDITION</span>
+              <span className="text-[#EF3969]">★</span>
+            </div>
+
+            {/* STAR CLIP-PATH WINDOW REVEALING HERO ASSET */}
+            <div className="relative group my-2">
+              {/* Outer pink shadow glow */}
+              <div className="absolute -inset-2 bg-[#000354] star-clip-window rotate-6 opacity-60" />
+              
+              {/* Star Cutout Container */}
+              <div
+                style={{
+                  width: 'clamp(180px, 28vw, 300px)',
+                  height: 'clamp(180px, 28vw, 300px)'
+                }}
+                className="relative star-clip-window bg-[#000354] border-4 border-[#E1C296] overflow-hidden flex items-center justify-center shadow-[6px_6px_0px_#000354]"
+              >
+                {/* Hero Asset revealed inside star slot */}
+                <div
+                  style={{
+                    backgroundImage: 'var(--hero-image)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center top'
+                  }}
+                  className="w-full h-full y2k-photo scale-110 group-hover:scale-125 transition-transform duration-700"
+                />
+
+                {/* Duotone Overlay tint */}
+                <div className="absolute inset-0 bg-[#000354]/30 mix-blend-multiply pointer-events-none" />
+              </div>
+
+              {/* Solid Pink Star Sticker Badge */}
+              <div className="absolute -bottom-3 -right-3 w-10 h-10 bg-[#EF3969] border-2 border-[#E1C296] flex items-center justify-center text-[#000354] font-black text-sm star-clip-window shadow-[2px_2px_0px_#000354] rotate-12">
+                ★
+              </div>
+            </div>
+
+            <p className="mt-3 text-xs font-mono font-bold text-[#000354] tracking-widest uppercase">
+              BHOPAL, MADHYA PRADESH · 2024–2028
+            </p>
+          </div>
+
+          {/* BOTTOM 50% BLOCK: DEEP ULTRAMARINE NAVY PHOTO / TEXT BLOCK */}
+          <div className="relative w-full bg-[#000354] py-12 px-4 sm:px-6 max-w-5xl mx-auto flex flex-col items-center text-center my-auto">
+            
+            {/* Chunky Y2K ALL CAPS Headline */}
+            <h1 className="text-fluid-hero font-black tracking-tighter text-[#E1C296] uppercase leading-none font-engineer">
+              ATIF KHAN
+            </h1>
+
+            {/* Tape-Label Chips Cluster */}
+            <div className="flex flex-wrap items-center justify-center gap-2.5 my-6">
+              <span className="y2k-tape-label -rotate-2">
+                ★ FRAMEBYFRAME
+              </span>
+              <span className="y2k-tape-label rotate-1 bg-[#EF3969] text-[#000354] border-[#000354]">
+                NOVEL: VETHARA
+              </span>
+              <span className="y2k-tape-label -rotate-1">
+                SCREENPLAY: BLOOD DEBT
+              </span>
+              <span className="y2k-tape-label rotate-2">
+                MERN / AI STACK
+              </span>
+            </div>
+
+            {/* Sub-headline & Bio */}
+            <p className="text-fluid-h3 font-black text-[#E6B886] max-w-2xl mx-auto mb-2 font-mono">
+              ENGINEER BY LOGIC. CREATOR BY INSTINCT.
+            </p>
+            <p className="text-sm sm:text-base font-mono text-[#E1C296]/85 max-w-xl mx-auto mb-8">
+              B.Tech AI & Data Science @ LNCT Bhopal · Researcher @ Techtonic · Co-author of "The Frequency of the Dead"
+            </p>
+
+            {/* Y2K Brutalist Action Buttons */}
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="#lab"
+                className="px-6 py-3 bg-[#EF3969] text-[#000354] font-mono font-black text-sm uppercase rounded-none border-2 border-[#E1C296] shadow-[4px_4px_0px_#E1C296] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_#E1C296] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2"
+              >
+                <Terminal size={16} />
+                <span>[ LAB PROJECTS ]</span>
+              </a>
+
+              <a
+                href="#studio"
+                className="px-6 py-3 bg-[#000F5C] text-[#E1C296] font-mono font-black text-sm uppercase rounded-none border-2 border-[#EF3969] shadow-[4px_4px_0px_#EF3969] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_#EF3969] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2"
+              >
+                <Film size={16} />
+                <span>[ THE STUDIO ]</span>
+              </a>
+
+              <a
+                href="#contact"
+                className="px-6 py-3 bg-[#E1C296] text-[#000354] font-mono font-black text-sm uppercase rounded-none border-2 border-[#000354] shadow-[4px_4px_0px_#EF3969] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_#EF3969] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all"
+              >
+                <span>[ DISPATCH ]</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Y2K Tartan Strip Divider Footer */}
+        <div className="w-full h-3 tartan-pattern border-t-2 border-[#E1C296]" />
+      </section>
+    );
+  }
+
+  // ========================================================
+  // THEME 1: CLASSIC HERO (DEFAULT - UNTOUCHED)
+  // ========================================================
   return (
     <section
       ref={containerRef}
@@ -205,4 +341,3 @@ export default function Hero({ voice, setVoice }) {
     </section>
   );
 }
-
